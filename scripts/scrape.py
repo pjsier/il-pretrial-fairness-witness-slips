@@ -12,22 +12,9 @@ OUTPUT_FIELDS = [
     "Representation",
     "PositionTypeDescription",
     "TestimonyDescription",
-    "affiliation",
     "timestamp",
 ]
 PAGE_SIZE = 1000
-
-POLICE = ["pd", "police", "ilacp", "fop", "public safety", "law enforce"]
-UNAFFILIATED = ["none", "citizen", "self", "personal", "not available", "applicable"]
-
-
-def get_affiliation(row):
-    affil_str = " ".join([row["FirmBusinessOrAgency"], row["Representation"]]).lower()
-    if any([s in affil_str for s in POLICE]):
-        return "Police"
-    if any([s in affil_str for s in UNAFFILIATED]):
-        return "Unaffiliated"
-    return "Other"
 
 
 def request_slips(hearing_id, chamber, pos, page=1, size=PAGE_SIZE):
@@ -72,7 +59,6 @@ if __name__ == "__main__":
 
     output_slips = []
     for slip in slips:
-        slip["affiliation"] = get_affiliation(slip)
         output_slips.append({k: slip.get(k) for k in OUTPUT_FIELDS})
     output_slips[-1]["timestamp"] = datetime.utcnow().isoformat()[:-7]
 
