@@ -40,7 +40,7 @@ def slips_for_position(hearing_id, chamber, pos):
         print(
             f"Requesting page {page}: {hearing_id}, {chamber}, {pos}", file=sys.stderr
         )
-        res = request_slips(hearing_id, chamber, pos)
+        res = request_slips(hearing_id, chamber, pos, page=page)
         data = res.json()
         slips.extend(data["data"])
         total_slips = data["total"]
