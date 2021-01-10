@@ -29,6 +29,8 @@ jobs:
           pipenv run python scripts/scrape.py $HEARING_ID > data/$HEARING_ID.csv
 
       - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add data/*
           git commit -m "Update data with Github Action"
           git push
